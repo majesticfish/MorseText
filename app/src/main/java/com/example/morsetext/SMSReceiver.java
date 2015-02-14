@@ -23,6 +23,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         Bundle myBundle = intent.getExtras();
         SmsMessage[] messages = null;
@@ -39,6 +40,6 @@ public class SMSReceiver extends BroadcastReceiver {
             }
             Toast.makeText(context, strMessage, Toast.LENGTH_SHORT).show();
         }
-        vibrator.vibrate(2200);
+        vibrator.vibrate(10000);
     }
 }
