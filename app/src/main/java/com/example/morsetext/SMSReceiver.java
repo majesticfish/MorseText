@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
@@ -18,7 +19,6 @@ public class SMSReceiver extends BroadcastReceiver {
      *
      * @param name Used to name the worker thread, important only for debugging.
      */
-
 
 
     @Override
