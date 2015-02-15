@@ -34,11 +34,11 @@ public class MorseCalculator {
             boolean[] temp = charToInt(string.charAt(i));
             for(int j = 0; j < 5; j ++){
                 if(j == 0){
-                    answer[(i * 6 + j) * 2 + 2] = 500;
+                    answer[(i * 5 + j) * 2 + 2] = 500;
                 }else {
-                    answer[(i * 6 + j) * 2 + 2] = 250;
+                    answer[(i * 5 + j) * 2 + 2] = 250;
                 }
-                answer[(i*6+j)*2+3] = temp[j]? 700:300;
+                answer[(i*5+j)*2+3] = temp[j]? 700:300;
             }
         }
         return answer;

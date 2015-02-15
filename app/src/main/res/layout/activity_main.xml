@@ -18,7 +18,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="130dp" />
+        android:layout_marginTop="130dp"
+        android:onClick="addBit"/>
 
     <Button
         android:layout_width="170dp"
@@ -28,7 +29,8 @@
         android:id="@+id/button2"
         android:layout_alignTop="@+id/button"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="addBit"/>
 
     <Button
         android:layout_width="100dp"
@@ -62,7 +64,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Recepient:                 "
         android:textSize="20sp"
         android:id="@+id/textView"
         android:layout_above="@+id/button5"
@@ -81,7 +83,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text=""
+        android:hint="Current Message"
         android:textSize="20sp"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
@@ -92,7 +95,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text=""
+        android:hint="Current Bits"
         android:textSize="15sp"
         android:id="@+id/textView3"
         android:layout_below="@+id/button4"
