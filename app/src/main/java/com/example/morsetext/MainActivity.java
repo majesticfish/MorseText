@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -118,11 +119,19 @@ public class MainActivity extends ActionBarActivity {
                 currentRecepient.setText("Recepient: "+name);
             }
 
-            Cursor c1 = getContentResolver().query(ContactsContract.Data.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER},
+            Cursor c1 = getContentResolver().query(ContactsContract.Data.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER, Phone.TYPE},
                     ContactsContract.Data.CONTACT_ID + "=?",new String[]{String.valueOf(contactId)},null);
-            c1.moveToFirst();
-            phonenumber = c1.getString(0);
-            System.out.println(phonenumber);
+            if(c1.moveToFirst()) {
+                final int contactNumberColumnIndex = c1.getColumnIndex(Phone.NUMBER);
+                final int contactTypeColumnIndex = c1.getColumnIndex(Phone.TYPE);
+                while(!c1.isAfterLast()){
+                    final String number = c1.getString(contactNumberColumnIndex);
+                    final int type = c1.getInt(contactTypeColumnIndex);
+                    final int typeLabelResouce = Phone.getTypeLabelResource(type);
+                    System.out.println("Number is: "+ number+ " Type is "+ typeLabelResouce);
+                    phonenumber = number;
+                }
+            }
         }
     }
 }
