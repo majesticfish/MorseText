@@ -27,7 +27,7 @@ public class MorseCalculator {
         return bits;
     }
     static public long[] stringToBuzz(String string){
-        long[] answer = new long[string.length()];
+        long[] answer = new long[string.length()*5];
         for(int i = 0; i < string.length(); i ++){
             boolean[] temp = charToInt(string.charAt(i));
             for(int j = 0; j < 5; j ++){
