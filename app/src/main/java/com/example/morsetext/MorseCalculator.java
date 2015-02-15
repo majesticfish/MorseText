@@ -27,11 +27,14 @@ public class MorseCalculator {
         return bits;
     }
     static public long[] stringToBuzz(String string){
-        long[] answer = new long[string.length()*5];
+        long[] answer = new long[string.length()*10+2];
+        answer[0] = 0;
+        answer[1] = 2500;
         for(int i = 0; i < string.length(); i ++){
             boolean[] temp = charToInt(string.charAt(i));
             for(int j = 0; j < 5; j ++){
-                answer[i*5+j] = temp[j]? 700:300;
+                answer[(i*5+j)*2+2] = 500;
+                answer[(i*5+j)*2+3] = temp[j]? 700:300;
             }
         }
         return answer;

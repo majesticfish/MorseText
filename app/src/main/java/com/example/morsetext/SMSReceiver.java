@@ -28,9 +28,8 @@ public class SMSReceiver extends BroadcastReceiver {
             for(int i = 0; i < messages.length; i ++){
                 messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
                 strMessage += "SMS From: " + messages[i].getOriginatingAddress();
-                message += "From: " + messages[i].getOriginatingAddress();
+//               message += "From: " + messages[i].getOriginatingAddress();
                 strMessage += " : ";
-                message += " ";
                 strMessage += messages[i].getMessageBody();
                 message += messages[i].getMessageBody();
                 strMessage += "\n";
