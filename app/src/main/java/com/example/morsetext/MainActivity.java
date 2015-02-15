@@ -1,11 +1,15 @@
 package com.example.morsetext;
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 
@@ -23,6 +27,15 @@ public class MainActivity extends ActionBarActivity {
         currentMessage = (TextView) findViewById(R.id.textView2);
         currentBits = (TextView) findViewById(R.id.textView3);
         currentRecepient = (TextView) findViewById(R.id.textView);
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        checkBox.setChecked(prefs.getBoolean("receiverOn", true));
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                prefs.edit().putBoolean("receiverOn", isChecked).apply();
+            }
+        });
     }
 
 
@@ -72,4 +85,5 @@ public class MainActivity extends ActionBarActivity {
             currentMessage.setText(temp.substring(0,temp.length()-1));
         }
     }
+
 }
