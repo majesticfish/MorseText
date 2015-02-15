@@ -66,4 +66,10 @@ public class MainActivity extends ActionBarActivity {
         }
         position--;
     }
+    public void backspace(View view){
+        if(currentMessage.length()>0){
+            String temp = currentMessage.getText().toString();
+            currentMessage.setText(temp.substring(0,temp.length()-1));
+        }
+    }
 }
