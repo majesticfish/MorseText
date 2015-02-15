@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Button;
@@ -80,6 +81,20 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void addBit(View view){
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        System.out.println("Held");
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        System.out.println("Released");
+                        break;
+                }
+                return false;
+            }
+        });
         if((int)view.getId()==2131230784){
             currentBit += (int)Math.pow(2,position);
             currentBits.setText(currentBits.getText()+"1");
