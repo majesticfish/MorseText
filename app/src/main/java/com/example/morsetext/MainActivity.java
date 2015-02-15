@@ -87,9 +87,10 @@ public class MainActivity extends ActionBarActivity {
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         System.out.println("Held");
+                        Constants.Time = System.currentTimeMillis();
                         break;
                     case MotionEvent.ACTION_UP:
-                        System.out.println("Released");
+                        System.out.println(System.currentTimeMillis()-Constants.Time);
                         break;
                 }
                 return false;

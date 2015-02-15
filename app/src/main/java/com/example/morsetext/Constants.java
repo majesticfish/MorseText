@@ -5,4 +5,5 @@ package com.example.morsetext;
  */
 public class Constants {
     static String message = "SMS_MESSAGE";
+    static double Time = 0;
 }
