@@ -11,7 +11,7 @@
     <Button
         android:layout_width="175dp"
         android:layout_height="175dp"
-        android:text="Press Me!"
+        android:text="Touch to get started!"
         android:textSize="45sp"
         android:id="@+id/button2"
         android:layout_marginTop="50dp"

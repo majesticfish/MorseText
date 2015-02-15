@@ -38,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
     Button sendButton;
     public static boolean hasMessage = false;
     public static boolean hasNumber = false;
+    private static boolean isFirst = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,10 +96,10 @@ public class MainActivity extends ActionBarActivity {
                         //System.out.println("here");
                         double difference = SystemClock.uptimeMillis() - Constants.Time;
                         System.out.println(difference);
-                        if(difference > 200){
+                        if(difference > 200 && !isFirst){
                             currentBit += (int)Math.pow(2,position);
                             currentBits.setText(currentBits.getText()+"1");
-                        }else{
+                        }else if(!isFirst){
                             currentBits.setText(currentBits.getText()+"0");
                         }
                         break;
@@ -106,14 +107,6 @@ public class MainActivity extends ActionBarActivity {
                 return false;
             }
         });
-        /*
-        if((int)view.getId()==2131230784){
-            currentBit += (int)Math.pow(2,position);
-            currentBits.setText(currentBits.getText()+"1");
-        }
-        else{
-            currentBits.setText(currentBits.getText()+"0");
-        }*/
         if(position==0){
             //add to string
             //clear current bits
@@ -124,7 +117,11 @@ public class MainActivity extends ActionBarActivity {
             currentBit = 0;
             position = 5;
         }
-        position--;
+        if(!isFirst) position--;
+        if(isFirst){
+            isFirst = false;
+            sendButton.setText("Press Me!");
+        }
     }
     public void backspace(View view){
         if(currentMessage.length()>0){
