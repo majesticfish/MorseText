@@ -7,13 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.support.v4.content.WakefulBroadcastReceiver;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 /**
  * Created by Sean on 2/14/2015.
  */
-public class SMSReceiver extends BroadcastReceiver {
+public class SMSReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,7 +37,7 @@ public class SMSReceiver extends BroadcastReceiver {
                 Toast.makeText(context, strMessage, Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(context, VibrateSMSMessage.class);
                 intent2.putExtra(Constants.message, message);
-                context.startService(intent2);
+                startWakefulService(context,intent2);
             }
         }
     }
