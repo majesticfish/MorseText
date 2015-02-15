@@ -22,10 +22,14 @@ public class VibrateSMSMessage extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        WakeLock wakeLock = ((PowerManager)getSystemService(Context.POWER_SERVICE)).newWakeLock(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,"Tag");
+        WakeLock wakeLock = ((PowerManager)getSystemService(Context.POWER_SERVICE)).newWakeLock(26,"Tag");
+       // wakeLock.acquire();
+        //.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         wakeLock.acquire();
+        System.out.println("I'm here");
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        System.out.println("I'm here");
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         String message = intent.getStringExtra(Constants.message);
         vibrator.vibrate(MorseCalculator.stringToBuzz(message),-1);

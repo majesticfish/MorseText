@@ -139,6 +139,8 @@ public class MainActivity extends ActionBarActivity {
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phonenumber,null,currentMessage.getText().toString(),null,null);
         currentMessage.setText("");
+        sendButton.setEnabled(false);
+        hasMessage = false;
     }
     final int contactPickerResult = 1001;
     public void doLaunchContactPicker(View view){
