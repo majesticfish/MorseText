@@ -1,5 +1,6 @@
 package com.example.morsetext;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -104,39 +105,22 @@ public class MainActivity extends ActionBarActivity {
         Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivityForResult(contactPickerIntent, contactPickerResult);
     }
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
         if(resultCode == RESULT_OK){
-            int id = 1;
-            switch(requestCode){
-                case contactPickerResult:
-                    Bundle extras = data.getExtras();
-                    /*Set keys = extras.keySet();
-                    Iterator iterate = keys.iterator();
-                    int counter = 0;
-                    while(iterate.hasNext()){
-                        String key = (String) iterate.next();
-                        System.out.println("This is a result: " + key+ "Number " + counter);
-                        counter ++;
-                    }*/
-                    Uri result = data.getData();
-                    System.out.println("GOT A RESULT!! : " + result.getLastPathSegment());
-                    break;
+            Uri result = data.getData();
+            Cursor c = getContentResolver().query(result, null, null, null, null);
+            String contactId = "";
+            if(c.moveToFirst()){
+                contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
             }
-            final String[] projection = new String[]{
-                    ContactsContract.CommonDataKinds.Phone.NUMBER,
-                    ContactsContract.CommonDataKinds.Phone.TYPE
-            };
-            Cursor contact = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,projection,ContactsContract.Contacts._ID + "=?", new String[]{String.valueOf(id)}, null);
-            if(contact.moveToFirst()){
-                final int contactNumberColumnIndex = contact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-                final int contactTypeColumnIndex = contact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
-                final String number = contact.getString(contactNumberColumnIndex);
-                final int typeLabelResource = ContactsContract.CommonDataKinds.Phone.getTypeLabelResource(contactTypeColumnIndex);
-                System.out.println("Number!: " + number + " Type: " + typeLabelResource);
-            }
-            contact.close();
-        }else{
-            System.out.println("Something happened!");
+
+            Cursor c1 = getContentResolver().query(ContactsContract.Data.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER},
+                    ContactsContract.Data.CONTACT_ID + "=?",new String[]{String.valueOf(contactId)},null);
+            c1.moveToFirst();
+            phonenumber = c1.getString(0);
+            System.out.println(phonenumber);
         }
     }
 }
