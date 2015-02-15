@@ -122,10 +122,19 @@ public class MainActivity extends ActionBarActivity {
                     System.out.println("GOT A RESULT!! : " + result.getLastPathSegment());
                     break;
             }
-            Cursor contact = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,null,ContactsContract.Contacts._ID + "=?", new String[]{String.valueOf(id)}, null);
+            final String[] projection = new String[]{
+                    ContactsContract.CommonDataKinds.Phone.NUMBER,
+                    ContactsContract.CommonDataKinds.Phone.TYPE
+            };
+            Cursor contact = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,projection,ContactsContract.Contacts._ID + "=?", new String[]{String.valueOf(id)}, null);
             if(contact.moveToFirst()){
-                System.out.println("GOT SOMETHING!!!: "+contact.getString(contact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
+                final int contactNumberColumnIndex = contact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                final int contactTypeColumnIndex = contact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE);
+                final String number = contact.getString(contactNumberColumnIndex);
+                final int typeLabelResource = ContactsContract.CommonDataKinds.Phone.getTypeLabelResource(contactTypeColumnIndex);
+                System.out.println("Number!: " + number + " Type: " + typeLabelResource);
             }
+            contact.close();
         }else{
             System.out.println("Something happened!");
         }
