@@ -114,6 +114,8 @@ public class MainActivity extends ActionBarActivity {
             String contactId = "";
             if(c.moveToFirst()){
                 contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                currentRecepient.setText("Recepient: "+name);
             }
 
             Cursor c1 = getContentResolver().query(ContactsContract.Data.CONTENT_URI,new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER},
