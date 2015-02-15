@@ -4,13 +4,16 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 /**
  * Created by Sean on 2/14/2015.
  */
+import android.os.PowerManager.WakeLock;
 public class VibrateSMSMessage extends IntentService{
 
     public VibrateSMSMessage() {
@@ -19,20 +22,15 @@ public class VibrateSMSMessage extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        int previousTime = 0;
-        try {
-            previousTime = android.provider.Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT);
-        }catch(Exception e){
-            System.out.println("You couldn't get current timeout times");
-        }
-        android.provider.Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, -1);
+        WakeLock wakeLock = ((PowerManager)getSystemService(Context.POWER_SERVICE)).newWakeLock(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,"Tag");
+        wakeLock.acquire();
         AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         String message = intent.getStringExtra(Constants.message);
         vibrator.vibrate(MorseCalculator.stringToBuzz(message),-1);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        android.provider.Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, previousTime);
+        wakeLock.release();
         //SMSReceiver.completeWakefulIntent(intent);
     }
 }
