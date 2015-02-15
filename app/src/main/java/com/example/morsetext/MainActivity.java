@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
@@ -87,10 +88,10 @@ public class MainActivity extends ActionBarActivity {
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         System.out.println("Held");
-                        Constants.Time = System.currentTimeMillis();
+                        Constants.Time = SystemClock.uptimeMillis();
                         break;
                     case MotionEvent.ACTION_UP:
-                        System.out.println(System.currentTimeMillis()-Constants.Time);
+                        System.out.println(SystemClock.uptimeMillis()-Constants.Time);
                         break;
                 }
                 return false;
