@@ -24,6 +24,6 @@ public class VibrateSMSMessage extends IntentService{
         String message = intent.getStringExtra(Constants.message);
         vibrator.vibrate(MorseCalculator.stringToBuzz(message),-1);
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-        SMSReceiver.completeWakefulIntent(intent);
+        //SMSReceiver.completeWakefulIntent(intent);
     }
 }

@@ -56,17 +56,6 @@ public class MainActivity extends ActionBarActivity {
         });
         sendButton.setEnabled(false);
     }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig){
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-        }
-    }
-
 
     @Override
         public boolean onCreateOptionsMenu(Menu menu) {
