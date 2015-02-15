@@ -14,6 +14,7 @@ import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -26,10 +27,13 @@ import java.util.Set;
 public class MainActivity extends ActionBarActivity {
     public static int currentBit = 0;
     public static int position = 4;
-    public static String phonenumber = "425-445-8107";
+    public static String phonenumber = "";
     TextView currentMessage;
     TextView currentBits;
     TextView currentRecepient;
+    Button sendButton;
+    public static boolean hasMessage = false;
+    public static boolean hasNumber = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
         currentMessage = (TextView) findViewById(R.id.textView2);
         currentBits = (TextView) findViewById(R.id.textView3);
         currentRecepient = (TextView) findViewById(R.id.textView);
+        sendButton = (Button) findViewById(R.id.button4);
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         checkBox.setChecked(prefs.getBoolean("receiverOn", true));
@@ -47,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
                 prefs.edit().putBoolean("receiverOn", isChecked).apply();
             }
         });
+        sendButton.setEnabled(false);
     }
 
 
@@ -85,6 +91,8 @@ public class MainActivity extends ActionBarActivity {
             //clear current bits
             currentBits.setText("");
             currentMessage.setText(currentMessage.getText()+String.valueOf(MorseCalculator.intToChar(currentBit)));
+            hasMessage = true;
+            if(hasMessage&&hasNumber) sendButton.setEnabled(true);
             currentBit = 0;
             position = 5;
         }
@@ -94,6 +102,10 @@ public class MainActivity extends ActionBarActivity {
         if(currentMessage.length()>0){
             String temp = currentMessage.getText().toString();
             currentMessage.setText(temp.substring(0,temp.length()-1));
+        }
+        if(currentMessage.getText().toString().length()==0){
+            sendButton.setEnabled(false);
+            hasMessage = false;
         }
     }
     public void sendSMS(View view){
@@ -124,15 +136,28 @@ public class MainActivity extends ActionBarActivity {
             if(c1.moveToFirst()) {
                 final int contactNumberColumnIndex = c1.getColumnIndex(Phone.NUMBER);
                 final int contactTypeColumnIndex = c1.getColumnIndex(Phone.TYPE);
+                int typeLabelResource = 0;
                 while(!c1.isAfterLast()){
                     final String number = c1.getString(contactNumberColumnIndex);
                     final int type = c1.getInt(contactTypeColumnIndex);
-                    final int typeLabelResouce = Phone.getTypeLabelResource(type);
-                    System.out.println("Number is: "+ number+ " Type is "+ typeLabelResouce);
+                    typeLabelResource = Phone.getTypeLabelResource(type);
+                    System.out.println("Number is: "+ number+ " Type is "+ typeLabelResource);
                     phonenumber = number;
-                    if(typeLabelResouce==Phone.getTypeLabelResource(2)) break;
+                    if(typeLabelResource==Phone.getTypeLabelResource(2)) break;
                     c1.moveToNext();
                 }
+                if(typeLabelResource!=Phone.getTypeLabelResource(2)){
+                    hasNumber=false;
+                    sendButton.setEnabled(false);
+                }
+                else {
+                    hasNumber = true;
+                    if (hasMessage && hasNumber) sendButton.setEnabled(true);
+                }
+            }
+            else{
+                hasNumber = false;
+                sendButton.setEnabled(false);
             }
         }
     }
