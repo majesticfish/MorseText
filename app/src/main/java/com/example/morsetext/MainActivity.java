@@ -1,8 +1,10 @@
 package com.example.morsetext;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -85,5 +87,8 @@ public class MainActivity extends ActionBarActivity {
             currentMessage.setText(temp.substring(0,temp.length()-1));
         }
     }
-
+    public void doLaunchContactPicker(View view){
+        Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(contactPickerIntent, 1001);
+    }
 }
