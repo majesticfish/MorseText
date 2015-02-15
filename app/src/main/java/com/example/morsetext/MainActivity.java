@@ -3,6 +3,7 @@ package com.example.morsetext;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -105,6 +106,7 @@ public class MainActivity extends ActionBarActivity {
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(resultCode == RESULT_OK){
+            int id = 1;
             switch(requestCode){
                 case contactPickerResult:
                     Bundle extras = data.getExtras();
@@ -119,6 +121,10 @@ public class MainActivity extends ActionBarActivity {
                     Uri result = data.getData();
                     System.out.println("GOT A RESULT!! : " + result.getLastPathSegment());
                     break;
+            }
+            Cursor contact = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,null,ContactsContract.Contacts._ID + "=?", new String[]{String.valueOf(id)}, null);
+            if(contact.moveToFirst()){
+                System.out.println("GOT SOMETHING!!!: "+contact.getString(contact.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
             }
         }else{
             System.out.println("Something happened!");
