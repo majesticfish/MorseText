@@ -12,8 +12,8 @@ import android.widget.Toast;
  */
 public class VibrateSMSMessage extends IntentService{
 
-    public VibrateSMSMessage(String name) {
-        super(name);
+    public VibrateSMSMessage() {
+        super("vibrate");
     }
 
     @Override
@@ -23,6 +23,5 @@ public class VibrateSMSMessage extends IntentService{
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         String message = intent.getStringExtra(Constants.message);
         vibrator.vibrate(5000);
-        Toast.makeText(getApplicationContext(), "Yo", Toast.LENGTH_SHORT).show();
     }
 }
