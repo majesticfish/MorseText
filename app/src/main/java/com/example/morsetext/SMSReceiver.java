@@ -14,17 +14,11 @@ import android.widget.Toast;
  */
 public class SMSReceiver extends BroadcastReceiver {
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
+
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         Bundle myBundle = intent.getExtras();
         SmsMessage[] messages = null;
         String strMessage = "";
@@ -39,7 +33,9 @@ public class SMSReceiver extends BroadcastReceiver {
                 strMessage += "\n";
             }
             Toast.makeText(context, strMessage, Toast.LENGTH_SHORT).show();
+            Intent intent2 = new Intent(context, VibrateSMSMessage.class);
+            intent2.putExtra(Constants.message,"hi");
+            context.startService(intent2);
         }
-        vibrator.vibrate(10000);
     }
 }
