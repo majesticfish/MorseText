@@ -88,6 +88,7 @@ public class MainActivity extends ActionBarActivity {
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         System.out.println("Held");
+                        Constants.Time = SystemClock.uptimeMillis();
                         break;
                     case MotionEvent.ACTION_UP:
                         double difference = SystemClock.uptimeMillis() - Constants.Time;
