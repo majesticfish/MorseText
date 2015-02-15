@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.Set;
 public class MainActivity extends ActionBarActivity {
     public static int currentBit = 0;
     public static int position = 4;
+    public static String phonenumber = "425-445-8107";
     TextView currentMessage;
     TextView currentBits;
     TextView currentRecepient;
@@ -91,6 +93,11 @@ public class MainActivity extends ActionBarActivity {
             currentMessage.setText(temp.substring(0,temp.length()-1));
         }
     }
+    public void sendSMS(View view){
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phonenumber,null,currentMessage.getText().toString(),null,null);
+        currentMessage.setText("");
+    }
     final int contactPickerResult = 1001;
     public void doLaunchContactPicker(View view){
         Intent contactPickerIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -101,16 +108,16 @@ public class MainActivity extends ActionBarActivity {
             switch(requestCode){
                 case contactPickerResult:
                     Bundle extras = data.getExtras();
-                    Set keys = extras.keySet();
+                    /*Set keys = extras.keySet();
                     Iterator iterate = keys.iterator();
                     int counter = 0;
                     while(iterate.hasNext()){
                         String key = (String) iterate.next();
                         System.out.println("This is a result: " + key+ "Number " + counter);
                         counter ++;
-                    }
+                    }*/
                     Uri result = data.getData();
-                    System.out.println("GOT A RESULT!! : " + result.toString());
+                    System.out.println("GOT A RESULT!! : " + result.getLastPathSegment());
                     break;
             }
         }else{
