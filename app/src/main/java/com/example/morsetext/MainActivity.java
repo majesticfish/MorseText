@@ -57,6 +57,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         sendButton.setEnabled(false);
+        //addBit((Button) findViewById(R.id.button));
     }
 
     @Override
@@ -87,11 +88,13 @@ public class MainActivity extends ActionBarActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
-                        System.out.println("Held");
                         Constants.Time = SystemClock.uptimeMillis();
+                        System.out.println("Held");
                         break;
                     case MotionEvent.ACTION_UP:
+                        //System.out.println("here");
                         double difference = SystemClock.uptimeMillis() - Constants.Time;
+                        System.out.println(difference);
                         if(difference > 200){
                             currentBit += (int)Math.pow(2,position);
                             currentBits.setText(currentBits.getText()+"1");
