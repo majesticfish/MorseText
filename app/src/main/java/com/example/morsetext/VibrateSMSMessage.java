@@ -22,7 +22,8 @@ public class VibrateSMSMessage extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        WakeLock wakeLock = ((PowerManager)getSystemService(Context.POWER_SERVICE)).newWakeLock(26,"Tag");
+        WakeLock wakeLock = ((PowerManager)getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "TAG");
+
        // wakeLock.acquire();
         //.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         wakeLock.acquire();
