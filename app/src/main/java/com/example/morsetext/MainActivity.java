@@ -88,22 +88,28 @@ public class MainActivity extends ActionBarActivity {
                 switch(event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         System.out.println("Held");
-                        Constants.Time = SystemClock.uptimeMillis();
                         break;
                     case MotionEvent.ACTION_UP:
-                        System.out.println(SystemClock.uptimeMillis()-Constants.Time);
+                        double difference = SystemClock.uptimeMillis() - Constants.Time;
+                        if(difference > 200){
+                            currentBit += (int)Math.pow(2,position);
+                            currentBits.setText(currentBits.getText()+"1");
+                        }else{
+                            currentBits.setText(currentBits.getText()+"0");
+                        }
                         break;
                 }
                 return false;
             }
         });
+        /*
         if((int)view.getId()==2131230784){
             currentBit += (int)Math.pow(2,position);
             currentBits.setText(currentBits.getText()+"1");
         }
         else{
             currentBits.setText(currentBits.getText()+"0");
-        }
+        }*/
         if(position==0){
             //add to string
             //clear current bits
