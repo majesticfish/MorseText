@@ -130,6 +130,8 @@ public class MainActivity extends ActionBarActivity {
                     final int typeLabelResouce = Phone.getTypeLabelResource(type);
                     System.out.println("Number is: "+ number+ " Type is "+ typeLabelResouce);
                     phonenumber = number;
+                    if(typeLabelResouce==Phone.getTypeLabelResource(2)) break;
+                    c1.moveToNext();
                 }
             }
         }
