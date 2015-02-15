@@ -8,7 +8,7 @@ public class MorseCalculator {
                              's','t','u','v','w','x','y','z',',','.','!','?','#'};
     static char[] capitals = {' ','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R',
                                'S','T','U','V','W','X','Y','Z'};
-    public boolean[] charToInt(char a){
+    static public boolean[] charToInt(char a){
         //used when reading texts, changing them into vibrations
         //shows true if has a bit, false otherwise
         //indexes 0,1,2,3,4 are the bits of the number in order
@@ -22,10 +22,21 @@ public class MorseCalculator {
         boolean[] bits = new boolean[5];
         for(int i=0;i<5;i++){
             bits[4-i] = temp%2==1?true:false;
+            temp /= 2;
         }
         return bits;
     }
-    public char intToChar(int a){
+    static public long[] stringToBuzz(String string){
+        long[] answer = new long[string.length()];
+        for(int i = 0; i < string.length(); i ++){
+            boolean[] temp = charToInt(string.charAt(i));
+            for(int j = 0; j < 5; j ++){
+                answer[i*5+j] = temp[j]? 700:300;
+            }
+        }
+        return answer;
+    }
+    static public char intToChar(int a){
         //used when taking in input, changing into text to send
         return alphabet[a];
     }

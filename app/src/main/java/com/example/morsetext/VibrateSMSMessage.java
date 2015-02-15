@@ -22,6 +22,8 @@ public class VibrateSMSMessage extends IntentService{
         audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         String message = intent.getStringExtra(Constants.message);
-        vibrator.vibrate(5000);
+        vibrator.vibrate(MorseCalculator.stringToBuzz(message),-1);
+        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+
     }
 }

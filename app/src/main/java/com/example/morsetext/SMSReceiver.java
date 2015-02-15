@@ -21,20 +21,23 @@ public class SMSReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle myBundle = intent.getExtras();
         SmsMessage[] messages = null;
-        String strMessage = "";
+        String strMessage = "", message = "";
         if(myBundle != null){
             Object[] pdus =(Object[]) myBundle.get("pdus");
             messages = new SmsMessage[pdus.length];
             for(int i = 0; i < messages.length; i ++){
                 messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
                 strMessage += "SMS From: " + messages[i].getOriginatingAddress();
+                message += "From: " + messages[i].getOriginatingAddress();
                 strMessage += " : ";
+                message += " ";
                 strMessage += messages[i].getMessageBody();
+                message += messages[i].getMessageBody();
                 strMessage += "\n";
             }
             Toast.makeText(context, strMessage, Toast.LENGTH_SHORT).show();
             Intent intent2 = new Intent(context, VibrateSMSMessage.class);
-            intent2.putExtra(Constants.message,"hi");
+            intent2.putExtra(Constants.message,message);
             context.startService(intent2);
         }
     }
