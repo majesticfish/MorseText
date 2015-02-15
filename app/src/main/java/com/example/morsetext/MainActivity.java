@@ -36,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
     TextView currentBits;
     TextView currentRecepient;
     Button sendButton;
+    Button bitButton;
     public static boolean hasMessage = false;
     public static boolean hasNumber = false;
     private static boolean isFirst = true;
@@ -48,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
         currentBits = (TextView) findViewById(R.id.textView3);
         currentRecepient = (TextView) findViewById(R.id.textView);
         sendButton = (Button) findViewById(R.id.button4);
+        bitButton = (Button) findViewById(R.id.button2);
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         checkBox.setChecked(prefs.getBoolean("receiverOn", true));
@@ -120,7 +122,7 @@ public class MainActivity extends ActionBarActivity {
         if(!isFirst) position--;
         if(isFirst){
             isFirst = false;
-            sendButton.setText("Press Me!");
+            bitButton.setText("Press Me!");
         }
     }
     public void backspace(View view){
